@@ -1,6 +1,18 @@
 <!doctype html>
-<title>Static Web Server</title>
-<link href=/-/css/style.css rel=stylesheet>
-<p class=red>
-    Static web server.
+<title>Template</title>
+<p>Hello, {{.Name}}</p>
+<h1>List {{len .List}} item{{if gt (len .List) 1}}s{{end}}</h1>
+
+<h1>List</h1>
+<ul>
+    {{range .List}}
+    <li> {{.}} </li>
+    {{end}}
+</ul>
+<p></p>
+<ul>
+    {{range $i, $v := .List}}
+    <li> {{$i}} , {{$v}} </li>
+    {{end}}
+</ul>
 </p>

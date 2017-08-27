@@ -48,7 +48,10 @@ func (d noDir) Open(name string) (http.File, error) {
 	return f, nil
 }
 
-//******** Override Dir ********
+type indexData struct {
+	Name string
+	List []string
+}
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -58,7 +61,17 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = t.Execute(w, nil) //Check Error
+
+	data := indexData{
+		Name: "SubAlgo",
+		List: []string{
+			"Go",
+			"C",
+			"C++",
+		},
+	}
+
+	err = t.Execute(w, data) //Check Error
 	if err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
