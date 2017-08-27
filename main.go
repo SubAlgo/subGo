@@ -53,15 +53,18 @@ type indexData struct {
 	List []string
 }
 
+var t = template.Must(template.ParseFiles("index.tmpl"))
+
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	//t, err := template.ParseFiles("index.tmpl")
-	t, err := template.ParseFiles("index.tmpl")
-	if err != nil { //ถ้ามี Error
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
+	/*
+		t, err := template.ParseFiles("index.tmpl")
+		if err != nil { //ถ้ามี Error
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+	*/
 	data := indexData{
 		Name: "SubAlgo",
 		List: []string{
@@ -71,7 +74,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	err = t.Execute(w, data) //Check Error
+	err := t.Execute(w, data) //Check Error
 	if err != nil {
 		log.Println(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
